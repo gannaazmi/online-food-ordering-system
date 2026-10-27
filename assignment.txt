@@ -1,0 +1,108 @@
+create database prodductDB;
+
+create table product(
+maker varchar(20),
+model varchar(20) primary key, 
+type varchar(20)
+);
+
+create table PC(
+model varchar(20) primary key,
+speed int,
+RAM int,
+HD int,
+RD varchar(20),
+price decimal(10,4),
+foreign key (model) references product(model)
+);
+
+create table laptop(
+model varchar(20) primary key,
+speed int,
+RAM int,
+HD int,
+screen decimal (4,1),
+price decimal(10,4),
+FOREIGN KEY (model) REFERENCES product(model)
+);
+
+create table printer(
+model varchar(20) primary key,
+color varchar(20),
+type varchar(20),
+price decimal(10,4),
+FOREIGN KEY (model) REFERENCES product(model)
+);
+
+INSERT INTO product VALUES
+('A', '1001', 'PC'),
+('B', '1002', 'PC'),
+('B', '2001', 'Laptop'),
+('C', '3001', 'Printer');
+
+
+INSERT INTO PC VALUES
+('1001', 900, 8, 500, 'DVD', 7000),
+('1002', 1200, 16, 1000, 'DVD', 10000);
+
+INSERT INTO laptop VALUES
+('2001', 1500, 8, 1000, 15.6, 15000);
+
+
+INSERT INTO Printer VALUES
+('3001', 'Yes', 'Inkjet', 2500);
+
+select p.model ,PC.price
+from product p
+join PC pc on p.model=pc.model
+where p.maker='B'
+
+union
+
+select p.model,l.price
+from product p 
+join laptop l on p.model=l.model
+where p.maker='B'
+
+union
+select p.model,pr.price
+from product p
+join printer pr on p.model=pr.model
+where p.maker='B'
+
+order by price;
+
+insert into product value
+('C', 'hp156', 'Printer');
+
+
+INSERT INTO Printer VALUES 
+('hp156', 'Yes', 'Laser', 2500);
+
+select * from printer 
+where model='hp156';
+
+insert into product value
+('B', '2002', 'Laptop');
+
+INSERT INTO laptop VALUES
+('2002', 1600, 0, 1000, 15.6, 25000);
+
+DELETE FROM laptop
+WHERE RAM < 1;
+
+UPDATE PC
+SET price = price * 1.10;
+
+alter table pc
+add processor varchar(50);
+
+drop table printer;
+
+create table scanner(
+model varchar(20) primary key,
+price decimal (10,2),
+foreign key (model) references product(model)
+);
+
+
